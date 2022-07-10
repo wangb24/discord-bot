@@ -26,12 +26,14 @@ class Miscellaneous(commands.Cog):
     async def hitokoto(self, ctx):
         try:
             embed = self.get_hitokoto()
+            await ctx.reply(embed=embed)
         except requests.exceptions.ConnectTimeout as err:
             await ctx.send('Ops, something went wrong. Please try again later.', delete_after=5)
             await ctx.message.delete()
             print(err)
             return
-        await ctx.reply(embed=embed)
+        except Exception as err:
+            print(err)
 
     def get_hitokoto(self):
         URL = 'https://v1.hitokoto.cn/'
